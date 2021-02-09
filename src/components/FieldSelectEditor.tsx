@@ -10,6 +10,15 @@ interface Settings {
 interface Props
   extends StandardEditorProps<string | string[] | null, Settings> {}
 
+/**
+ * FieldSelectEditor populates a Select with the names of the fields returned by
+ * the query.
+ *
+ * Requires Grafana >=7.0.3. For more information, refer to the following
+ * pull request:
+ *
+ * https://github.com/grafana/grafana/pull/24829
+ */
 export const FieldSelectEditor: React.FC<Props> = ({
   item,
   value,
