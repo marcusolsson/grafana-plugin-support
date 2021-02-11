@@ -34,9 +34,16 @@ export const getPanelPluginOrFallback = async (
     return plugin;
   }
 
-  return new PanelPlugin<any>(() => (
-    <PanelAlert
-      title={`Error loading: ${meta.id}`}
-    >{`This plugin requires a more recent version of Grafana (${meta.dependencies.grafanaDependency}).`}</PanelAlert>
+  return new PanelPlugin<any>(({ width, height }) => (
+    <div
+      style={{
+        width,
+        height,
+      }}
+    >
+      <PanelAlert
+        title={`Error loading: ${meta.id}`}
+      >{`This plugin requires a more recent version of Grafana (${meta.dependencies.grafanaDependency}).`}</PanelAlert>
+    </div>
   ));
 };
