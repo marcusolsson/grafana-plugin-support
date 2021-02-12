@@ -14,6 +14,8 @@ export const hasCapability = (capability: string) => {
       return gte(version, "7.3.0");
     case "standard-options-object":
       return gte(version, "7.4.0");
+    case "custom-editor-context":
+      return gte(version, "7.0.3");
     default:
       return false;
   }
