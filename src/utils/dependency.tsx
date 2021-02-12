@@ -1,7 +1,6 @@
 import React from "react";
 import { PanelPlugin } from "@grafana/data";
 import { config } from "@grafana/runtime";
-import { PanelAlert } from "../components/PanelAlert";
 import { satisfies } from "semver";
 import { getBackendSrv } from "@grafana/runtime";
 
@@ -34,16 +33,30 @@ export const getPanelPluginOrFallback = async (
     return plugin;
   }
 
-  return new PanelPlugin<any>(({ width, height }) => (
-    <div
-      style={{
-        width,
-        height,
-      }}
-    >
-      <PanelAlert
-        title={`Error loading: ${meta.id}`}
-      >{`This plugin requires a more recent version of Grafana (${meta.dependencies.grafanaDependency}).`}</PanelAlert>
-    </div>
-  ));
+  return new PanelPlugin<any>(({ width, height }) => {
+    const style = {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      height: "100%",
+    };
+
+    return (
+      <div
+        style={{
+          width,
+          height,
+        }}
+      >
+        <div style={style}>
+          <div>
+            <p>
+              <strong>{`Error loading: ${meta.id}`}</strong>
+            </p>
+            {`This plugin requires a more recent version of Grafana (${meta.dependencies.grafanaDependency}).`}
+          </div>
+        </div>
+      </div>
+    );
+  });
 };
