@@ -1,4 +1,9 @@
-import { FieldConfigProperty, StandardOptionConfig } from "@grafana/data";
+import {
+  Field,
+  FieldConfigProperty,
+  getFieldConfigWithMinMax,
+  StandardOptionConfig,
+} from "@grafana/data";
 import { config } from "@grafana/runtime";
 import { gte } from "semver";
 
@@ -16,6 +21,8 @@ export const hasCapability = (capability: string) => {
       return gte(version, "7.4.0");
     case "custom-editor-context":
       return gte(version, "7.0.3");
+    case "field-config-with-min-max":
+      return gte(version, "7.4.0");
     default:
       return false;
   }
@@ -26,12 +33,24 @@ export const hasCapability = (capability: string) => {
  * new API.
  */
 export const standardOptionsCompat = (options: FieldConfigProperty[]): any => {
-  const init: Partial<Record<FieldConfigProperty, StandardOptionConfig>> = {};
+  if (hasCapability("standard-options-object")) {
+    return options.reduce<
+      Partial<Record<FieldConfigProperty, StandardOptionConfig>>
+    >((acc, curr) => {
+      acc[curr] = {};
+      return acc;
+    }, {});
+  }
+  return options;
+};
 
-  return hasCapability("standard-options-object")
-    ? options.reduce((acc, curr) => {
-        acc[curr] = {};
-        return acc;
-      }, init)
-    : options;
+/**
+ * fieldConfigWithMinMaxCompat uses the getFieldConfigWithMinMax if
+ * available, otherwise falls back.
+ */
+export const fieldConfigWithMinMaxCompat = (field: Field) => {
+  if (hasCapability("field-config-with-min-max")) {
+    return getFieldConfigWithMinMax(field, true);
+  }
+  return field.config;
 };
