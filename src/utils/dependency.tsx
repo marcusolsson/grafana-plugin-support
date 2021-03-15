@@ -28,7 +28,9 @@ export const getPanelPluginOrFallback = async (
   const meta: PluginMeta = res.data;
 
   if (
-    satisfies(config.buildInfo.version, meta.dependencies.grafanaDependency)
+    satisfies(config.buildInfo.version, meta.dependencies.grafanaDependency, {
+      includePrerelease: true,
+    })
   ) {
     return plugin;
   }
