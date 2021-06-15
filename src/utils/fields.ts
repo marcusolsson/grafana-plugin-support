@@ -4,16 +4,18 @@ import {
   Field,
   FieldType,
   getDisplayProcessor,
+  GrafanaTheme,
   TimeZone,
 } from "@grafana/data";
 
 export const toTimeField = (
   field?: Field,
-  timeZone?: TimeZone
+  timeZone?: TimeZone,
+  theme?: GrafanaTheme
 ): Field | undefined => {
   if (field?.type === FieldType.number) {
     const tmp = { ...field, type: FieldType.time };
-    tmp.display = getDisplayProcessor({ field: tmp });
+    tmp.display = getDisplayProcessor({ field: tmp, timeZone, theme });
     return tmp;
   } else if (field?.type === FieldType.string) {
     const tmp = {
@@ -28,7 +30,7 @@ export const toTimeField = (
         )
       ),
     };
-    tmp.display = getDisplayProcessor({ field: tmp });
+    tmp.display = getDisplayProcessor({ field: tmp, timeZone, theme });
     return tmp;
   }
   return field;

@@ -1,12 +1,13 @@
 {
   "name": "grafana-plugin-support",
-  "version": "0.3.0-alpha.4",
+  "version": "0.3.0-alpha.5",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "jest --config=jest.config.js"
+    "test": "jest --config=jest.config.js",
+    "prepublish": "yarn build"
   },
   "devDependencies": {
     "@grafana/data": "^7.4.0",
