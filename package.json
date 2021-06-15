@@ -10,9 +10,9 @@
     "prepublish": "yarn build"
   },
   "devDependencies": {
-    "@grafana/data": "^7.4.0",
-    "@grafana/runtime": "^7.4.0",
-    "@grafana/ui": "^7.4.0",
+    "@grafana/data": "7.5.7",
+    "@grafana/runtime": "7.5.7",
+    "@grafana/ui": "7.5.7",
     "@types/jest": "^26.0.20",
     "@types/react": "16.8.16",
     "@types/semver": "^7.3.4",
